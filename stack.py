@@ -20,7 +20,7 @@ class Stack1: #列表首端为栈顶
         return len(self.items)
 
 
-class Stack2: #列表尾端为栈顶 (比上面的性能更优)
+class Stack: #列表尾端为栈顶 (比上面的性能更优)
     def __init__(self):
         self.items = []
 
