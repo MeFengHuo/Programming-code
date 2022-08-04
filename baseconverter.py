@@ -1,0 +1,39 @@
+#栈应用之进制转换(将十进制转换成其他进制)
+from Stack import Stack
+
+def divideBy2(decNumber): #十进制转换成二进制
+    remstack = Stack()
+
+    while decNumber > 0:
+        rem = decNumber % 2 #求余数
+        remstack.push(rem) #将余数压入栈
+        decNumber = decNumber // 2 #整数除
+
+    binString = ""
+    while not remstack.isEmpty():
+        binString = binString + str(remstack.pop()) #将余数出栈拼接成二进制
+
+    return binString
+
+# print(divideBy2(57))
+
+def baseConverter(decNumber,base): #将十进制数字转换成base进制
+    digits = "123456789ABCDEF" #定义目标进制数字标识(由于digits进制表示小于16位，所以base只能转换成16以下进制)
+
+    remstack = Stack()
+
+    while decNumber > 0:
+        rem = decNumber % base
+        remstack.push(rem)
+        decNumber = decNumber // base
+
+    newString = ""
+    while not remstack.isEmpty():
+        newString = newString + digits[remstack.pop()]
+
+    return newString
+
+print(baseConverter(25,2))
+print(baseConverter(25,8))
+print(baseConverter(25,16))
+print(baseConverter(25,13))
