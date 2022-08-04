@@ -4,7 +4,7 @@ class Stack1: #列表首端为栈顶
     def __init__(self):
         self.items = []
 
-    def isEmpty(self):#是否为空
+    def isEmpty(self):#是空
         return self.items == []
 
     def push(self,item):#压栈（将item加入栈顶，无返回值）
