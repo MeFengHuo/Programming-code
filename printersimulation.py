@@ -1,4 +1,4 @@
-# 队列应用——模拟打印机任务
+# 队列应用——模拟打印机任务 （模拟系统对现实的仿真）
 from queue import Queue
 import random
 
