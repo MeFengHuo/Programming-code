@@ -1,0 +1,53 @@
+#策略：分治
+# 1将问题分为若干更小规模的部分
+# 2通过解决没一个小规模部分问题，并将结果汇总
+# 3得到原始问题的解
+# ##递归算法与分治策略
+# 递归三定律
+# 1基本结束条件，解决最小规模问题
+# 2缩小规模，向基本结束条件演进
+# 3调用自身来解决已缩小规模的相同问题
+# 优化问题：在计算机科学中许多算法都是为了找到某些问题的最优解
+# 货币找零兑换问题
+# 贪心策略：每次都试图解决问题的尽量大的一部分（对面到兑换硬币问题，就是每次以最多数量
+#         最大面值硬币来迅速减小找零面值）
+
+# 找零兑换问题：递归算法
+# 用递归做找零兑换问题中存在重复计算的部分，需要改进
+def recMC1(coinValueList,change):    #coinValueList货币体系列表，change找零钱数
+    minCoins = change
+    if change in coinValueList:     #最小规模，直接返回（如果找零钱数正好在货币体系列表中直接返回）
+        return 1
+    else:
+        for i in [c for c in coinValueList if c <= change]:
+            #遍历货币体系列表中比找零钱数小的货币面值
+            numCoins = 1 + recMC1(coinValueList, change-i)
+            #recMC中的coinValueList是调用自身，change-i是减小规模：每次减去一种货币面值挑选最小数量
+            if numCoins < minCoins:
+                minCoins = numCoins
+        return minCoins
+
+coinValueList = [1,5,10,25]
+# print(recMC1(coinValueList,63))
+
+# 找零兑换问题：递归解法改进（改进的关键在于消除重复计算，对美育计算过的中间结果保存起来）
+def recDC(coinValueList,change,knownResults):   #knownResults是用来记录中间结果的
+    minCoins = change
+    if change in coinValueList:     #递归基本结束条件
+        knownResults[change] = 1    #记录最优解
+        return 1
+    elif knownResults[change] > 0:
+        return knownResults[change] #查表成功，直接使用最优解
+    else:
+        for i in [c for c in coinValueList if c <= change]:
+            numCoins = 1 + recDC(coinValueList,change-i,knownResults)
+            if numCoins < minCoins:
+                minCoins = numCoins
+                knownResults[change] = minCoins #找到最优解，记录到表中
+
+    return minCoins
+
+coinValueList = [1,5,10,21,25]
+knownResults = [0] * 64
+print(recDC(coinValueList,63,knownResults))
+print(knownResults)
