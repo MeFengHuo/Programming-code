@@ -1,0 +1,42 @@
+# 快速排序：取排序对象的内容的中值，将中值和排序对象中的其他项进行比对并分裂，（比对结果分为小于中值和大于等于中值），递归调用
+def quickSort(alist):
+    quickSortHelper(alist,0,len(alist)-1)
+
+def quickSortHelper(alist,first,last):
+    if first<last:
+
+        splitpoint = partition(alist,first,last)    #分裂点
+        quickSortHelper(alist,first,splitpoint-1)   #递归调用（分裂出来的左半部分）
+        quickSortHelper(alist,splitpoint+1,last)    #右半部分
+
+def partition(alist,first,last):    #分裂函数
+    pivotvalue = alist[first]       #选定“中值”
+
+    leftmark = first + 1            #初始化左标
+    rightmark = last                #初始化右标
+
+    done = False
+    while not done:
+
+        while leftmark <= rightmark and alist[leftmark] <= pivotvalue:  #向右移动左标
+            leftmark = leftmark + 1
+
+        while rightmark >= leftmark and alist[rightmark] >= pivotvalue: #向左移动右标
+            rightmark = rightmark - 1
+
+        if rightmark < leftmark:    #两标相错就结束移动
+            done = True
+        else:                       #左右标的值互换
+            temp = alist[leftmark]
+            alist[leftmark] = alist[rightmark]
+            alist[rightmark] = temp
+
+    temp = alist[first]             #中值就位
+    alist[first] = alist[rightmark]
+    alist[rightmark] = temp
+
+    return  rightmark   #中值点，也是分裂点
+
+alist = [54,26,14,89,20,31,45,11,16,50,32]
+quickSort(alist)
+print(alist)
