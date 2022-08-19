@@ -1,4 +1,4 @@
-#栈应用之进制转换(将十进制转换成其他进制)
+# 栈应用之进制转换(将十进制转换成其他进制)
 from Stack import Stack
 
 def divideBy2(decNumber): #十进制转换成二进制
