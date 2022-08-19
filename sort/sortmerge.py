@@ -1,4 +1,4 @@
-# 归并排序：典型使用分治策略案例
+# 归并排序：典型使用分治策略案例   nlog(n)
 def mergeSort(alist):
     print("Splitting",alist)
     if len(alist) > 1:          #递归基本结束条件
