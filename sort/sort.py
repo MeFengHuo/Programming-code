@@ -43,4 +43,3 @@ def selectionSort(alist):   #选择排序
 clist = [5,1,4,6,7,41,20,9,5]
 selectionSort(clist)
 print(clist)
-
