@@ -1,0 +1,73 @@
+# hashing应用：实现ADT Map映射
+class HashTable:                #散列表对象
+    def __init__(self):
+        self.size = 11          #槽大小，一般取素数
+        self.slots = [None] * self.size     #用于保存散列表key的列表
+        self.data = [None] * self.size      #用于保存散列表value的列表
+
+    def hashfunction(self,key,size):        #散列函数
+        return key % size                   #这里用求余的值作为key
+
+    def rehash(self,oldhash,size):          #散列冲突解决，再散列
+        return (oldhash+1)%size             #这里用的是+1线性探测
+
+    def put(self,key,data):                 #方法：把数据data散列后装入散列槽key中(给定key返回关联的数据值)
+        hashvalue = self.hashfunction(key,len(self.slots))  #求散列值
+
+        if self.slots[hashvalue] == None:    #key不存在，未冲突
+            self.slots[hashvalue] = key
+            self.data[hashvalue] = data
+        else:
+            if self.slots[hashvalue] == key:    #key存在，替换value
+                self.data[hashvalue] = data    #replace
+            else:
+                nextsolt = self.rehash(hashvalue,len(self.slots))   #散列冲突，再散列，直到找到空槽或者key
+                while self.slots[nextsolt] != None and self.slots[nextsolt] != key:
+                    nextsolt = self.rehash(nextsolt,len(self.slots))
+
+                if self.slots[nextsolt] == None:
+                    self.slots[nextsolt] = key
+                    self.data[nextsolt] = data
+                else:
+                    self.data[nextsolt] = data  #replace
+
+    def get(self,key):
+        startsolt = self.hashfunction(key,len(self.slots))  #标记散列值为查找起点
+
+        data = None
+        stop = False
+        found = False
+        position = startsolt
+        while self.slots[position] != None and not found and not stop:  #找key，直到空槽或回到起点
+            if self.slots[position] == key:
+                found = True
+                data = self.data[position]
+            else:
+                position = self.rehash(position,len(self.slots))    # 未找到key，再散列继续找
+                if position == startsolt:
+                    stop = True          # 回到起点
+        return data
+
+    def __getitem__(self, key):
+        return  self.get(key)
+
+    def __setitem__(self,key,data):
+        self.put(key,data)
+
+H=HashTable()
+H[54]="cat"
+H[26]="dog"
+H[93]="lion"
+H[17]="tiger"
+H[77]="bird"
+H[31]="cow"
+H[44]="goat"
+H[55]="pig"
+H[20]="chicken"
+print(H.slots)
+print(H.data)
+
+print(H[20])
+
+print(H[17])
+H[20]='duck'
