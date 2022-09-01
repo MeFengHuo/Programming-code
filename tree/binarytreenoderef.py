@@ -33,6 +33,26 @@ class BinaryTree:
     def getRootVal(self):       #取得根值
         return self.key
 
+    def preorder(self):         #前序遍历树:根>左子树>右子树
+        print(self.key)
+        if self.leftChild:
+            self.leftChild.preorder()
+        if self.rightChild:
+            self.rightChild.preorder()
+
+    def postorder(self):        #后序遍历树：左子树>右子树>根
+        if self.key != None and self.leftChild:
+            self.leftChild.postorder()
+        if self.key != None and self.rightChild:
+            self.rightChild.postorder()
+        print(self.key)
+
+    def inorder(self):          #中序遍历树：左子树>根>右子树
+        if self.key != None and self.leftChild:
+            self.leftChild.inorder()
+        print(self.key)
+        if self.key != None and self.rightChild:
+            self.rightChild.inorder()
 
 r = BinaryTree('a')
 print(r.getRootVal())
