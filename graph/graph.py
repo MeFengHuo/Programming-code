@@ -62,7 +62,7 @@ class Graph:                    #对象图
         if fromVertex not in self.vertexList:
             nv = self.addVertex(fromVertex)
         if toVertex not in self.vertexList:
-            nv = self.vertexList[toVertex]
+            nv = self.addVertex(toVertex)
         self.vertexList[fromVertex].addNeighbor(self.addVertex(toVertex),wight)
 
     def getVertices(self):          #方法：获得顶点
