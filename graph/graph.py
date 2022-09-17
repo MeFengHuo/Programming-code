@@ -99,7 +99,7 @@ class Graph:                    #对象图
             nv = self.addVertex(fromVertex)
         if toVertex not in self.vertexList:
             nv = self.addVertex(toVertex)
-        self.vertexList[fromVertex].addNeighbor(self.addVertex(toVertex),wight)
+        self.vertexList[fromVertex].addNeighbor(self.vertexList[toVertex],wight)
 
     def getVertices(self):          #方法：获得顶点
         return self.vertexList.keys()
